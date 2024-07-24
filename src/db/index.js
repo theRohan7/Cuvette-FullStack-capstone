@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 
-const DB_NAME = "Cuvette Learning";
+const DB_NAME = "Cuvette";
 
 const connectDB = async () => {
     try {

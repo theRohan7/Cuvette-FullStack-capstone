@@ -17,12 +17,10 @@ const  userSchema  = new Schema(
             type: String,
             required: [true, "Password is Required"], 
         },
-        description: {
-            type: String,
-        },
-},
-{
-    timestamps: true
+        date: {
+            type: Date,
+            default: Date.now()
+        }
 }
 )
 
