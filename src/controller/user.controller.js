@@ -90,6 +90,25 @@ const loginUser = asyncHandler( async(req, res) => {
     )
 })
 
+const changePassword = asyncHandler ( async(req,res) =>{
+    const {oldpassword, newPassword} = req.body
+
+    const user = await User.findById(req.user?._id)
+    const isPasswordCorrect = await user.isPasswordCorrect(oldpassword)
+
+    if(!isPasswordCorrect){
+        throw new ApiError(400, "Old Password is wrong")
+    }
+
+    user.password = newPassword
+    await user.save({validateBeforeSave: false})
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(200, {}, "Password chnaged successfully.")
+    )
+})
 
 
 
@@ -99,4 +118,6 @@ const loginUser = asyncHandler( async(req, res) => {
 export {
     registerUser,
     loginUser,
+    changePassword
+    
 };
