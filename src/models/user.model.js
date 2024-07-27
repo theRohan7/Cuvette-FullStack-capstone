@@ -36,13 +36,13 @@ userSchema.methods.isPasswordCorrect = async function(password){
 }
 
 userSchema.methods.generateToken = function(){
-    jwt.sign(
+    return jwt.sign(
         {
-            _id:this._id,
+            _id: this._id,
         },
         process.env.TOKEN_SECRET,
         {
-            expiresIn:  process.env.TOKEN_EXPIRY
+            expiresIn: process.env.TOKEN_EXPIRY
         }
     )
 }

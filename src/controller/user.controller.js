@@ -6,6 +6,17 @@ import jwt from "jsonwebtoken"
 import mongoose from "mongoose"
 
 
+const tokenGeneration = async (userId) =>{
+    try {
+        const user = await User.findById(userId)
+        const token = user.generateToken()
+
+        return token
+
+    } catch (error) {
+        throw new ApiError(500, "something went wrong while generating token.")
+    }
+}
 
 const registerUser = asyncHandler( async(req, res) => {
     
@@ -67,12 +78,7 @@ const loginUser = asyncHandler( async(req, res) => {
         throw new ApiError(500, "Invalid user credentials")
     }
 
-    const token = jwt.sign(
-        {
-            _id: user._id
-        },
-        process.env.TOKEN_SECRET
-    );
+    const token = await tokenGeneration(user._id)
 
     const loggedinUser = await User.findById(user._id).select("-password")
 
@@ -82,8 +88,7 @@ const loginUser = asyncHandler( async(req, res) => {
         new ApiResponse(
             200,
             {
-                user: loggedinUser,
-                token
+                user: loggedinUser, token
             },
             "User logged in successfully."
         )
@@ -91,13 +96,14 @@ const loginUser = asyncHandler( async(req, res) => {
 })
 
 const changePassword = asyncHandler ( async(req,res) =>{
-    const {oldpassword, newPassword} = req.body
+    const {email, oldPassword, newPassword} = req.body
 
-    const user = await User.findById(req.user?._id)
-    const isPasswordCorrect = await user.isPasswordCorrect(oldpassword)
-
+    const  user = await User.findById(req.user?._id)
+   
+    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
+    
     if(!isPasswordCorrect){
-        throw new ApiError(400, "Old Password is wrong")
+        throw new ApiError(400, "Invalid Old password")
     }
 
     user.password = newPassword
