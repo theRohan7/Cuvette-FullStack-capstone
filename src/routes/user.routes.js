@@ -13,10 +13,4 @@ router.route("/change-password").post(verifyJWT, changePassword)
 
 
 
-
-
-
-
-
-
 export default router;
