@@ -24,6 +24,42 @@ const createJob = asyncHandler ( async(req, res) => {
     )
 })
 
+const getJob = async (req, res) =>{
+    const {id} = req.params;
+    const job = await Job.findById(id);
+
+    if(!job){
+        throw new ApiError(404, "Job not found.")
+    }
+
+    return res
+    .status(200)
+    .json( new ApiResponse(200, job, "Jobs fetched successfully"))
+}
+
+const deleteJob = asyncHandler( async(req, res) =>{
+     const { id } = req.params;
+     const job = await Job.findById(id);
+
+     const jobCreator = job.userId.toString();
+     const user = req.user._id.toString();
+     if(jobCreator !== user){
+        throw new ApiError(403, "Unauthorized access to delete")
+    }
+
+    await Job.findByIdAndDelete(id)
+    
+    return res
+    .status(200)
+    .json(new ApiResponse(200, "Job deleted successfully"))
+
+})
 
 
-export { createJob }
+
+export { 
+    createJob,
+    getJob,
+    deleteJob,
+
+ }
