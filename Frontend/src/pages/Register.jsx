@@ -1,9 +1,12 @@
 import React from 'react'
 import { useState } from 'react'
 import { register } from '../services/register'
+import { useNavigate } from "react-router-dom"
+
 
 function Register() {
 
+  const navigate = useNavigate()
   const [userData, setUserData] = useState({
     name: '',
     email: '',
@@ -16,7 +19,7 @@ function Register() {
       [e.target.name]: e.target.value
     })
   }
-
+  
   const handleSubmit = async (e) =>{
     e.preventDefault();
     if(!userData.name || !userData.email || !userData.password){
@@ -25,7 +28,11 @@ function Register() {
     try {
       const { name, email, password} = userData
       const  response = await register({name, email, password})
-      console.log(response)
+      // console.log(response);
+      if(response.status === 201){
+        alert("User created successfully")
+        navigate('/login')
+      }
 
     } catch (error) {
       console.log(error);
