@@ -13,7 +13,7 @@ const register = async({name, email, password}) =>{
         return response;
 
     } catch (error) {
-        return new Error(error.response.data.message)
+        throw new Error(error.response.data.message)
     }
 }
 
@@ -26,7 +26,7 @@ const login = async({email, password}) =>{
 
        return response;
     } catch (error) {
-        return new Error(error.response.data.message)
+        throw new Error(error.response.data.message)
     }
 
 }
