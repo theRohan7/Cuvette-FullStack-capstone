@@ -29,12 +29,12 @@ function Login() {
     try {
         const {email, password} = userData
         const response = await login({email, password})
-        console.log(response);
+        // console.log(response);
         if(response.status === 200){
             const{data} = response;
             localStorage.setItem("token", data.data.token);
             toast.success("user logged in successfully")
-            navigate("/home")
+            navigate("/")
 
         }
     } catch (error) {
@@ -45,13 +45,16 @@ function Login() {
     }
   }
   return (
+    
     <div>
       <h1>Login</h1>
-      <form onSubmit={handleSubmit} >
+      {loading ? <h1>Loading...</h1>: 
+        <form onSubmit={handleSubmit} >
         <input type="email" name='email' value={userData.email} placeholder='Email' onChange={handleChange} />
         <input type="password" name='password' value={userData.password} placeholder='Password' onChange={handleChange} />
         <button disabled={loading} type='submit'>{loading? "Loading": "Login"}</button>
-      </form>
+      </form>      
+      }
     </div>
   )
 }

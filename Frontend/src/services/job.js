@@ -1,8 +1,8 @@
 import axios from "axios";
 import { BACKEND_URL } from "../utils/constants";
-import toast from "react-hot-toast";
 
-export const createJob = async ({data}) =>{
+
+const createJob = async ({data}) =>{
     
     try {
         
@@ -16,8 +16,47 @@ export const createJob = async ({data}) =>{
         return response
         
     } catch (error) {
-        console.log(error.response.data.message);
+        console.log(error.response.data.me);
         throw new Error(error.response.data.messgae)
     }
 
 }
+
+
+ const getJobs = async() =>{
+    try {
+       const token  = localStorage.getItem("token"); 
+       const  response = await axios.get(`${BACKEND_URL}/job`,{
+        headers:{
+            'Authorization': token
+        }
+       })
+       return response;
+        
+    } catch (error) {
+        // console.log(error.response.data.message);
+        throw new Error(error.response.data.message)
+    }
+ }
+
+ const getOneJob = async({id}) => {
+   try {
+
+     const token = localStorage.getItem("token");
+     const response = await axios.get(`${BACKEND_URL}/job/${id}`,{
+         headers: {
+             "Authorization": token
+         }
+     })
+     return response
+   } catch (error) {
+
+    console.log(error.message);
+    throw new Error(error.response.data.message)
+
+   }
+ }
+
+
+
+export { createJob, getJobs, getOneJob }

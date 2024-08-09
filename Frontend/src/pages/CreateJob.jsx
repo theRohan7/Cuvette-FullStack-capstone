@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { createJob } from "../services/job";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const SKILLS = [
     {
@@ -47,6 +48,7 @@ const SKILLS = [
 ]
 
 function CreateJob() {
+   const navigate = useNavigate()
    const [fromData, setFormData] = useState({
       companyName:"",
       logoURL:"",
@@ -87,10 +89,14 @@ function CreateJob() {
 
          if(response.data.statusCode === 200)
          toast.success(`${response.data.message}`)
+         navigate("/")
+
+
          
       } catch (error) {
          console.log(error.message);
          toast.error("Failed to Create job.")
+
       }
    }
 

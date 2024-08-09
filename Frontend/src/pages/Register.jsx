@@ -48,12 +48,14 @@ function Register() {
   return (
     <div>
       <h1>Create an Account</h1>
-      <form onSubmit={handleSubmit}>
+      {loading? <h1>Loading...</h1>: 
+        <form onSubmit={handleSubmit}>
         <input name='name' value={userData.name} onChange={handleChange} type="text" placeholder="Name"/>
         <input name='email' value={userData.email} onChange={handleChange} type="email" placeholder="Email"/>
         <input name='password' value={userData.password} onChange={handleChange} type="password" placeholder="Password"/>
         <button disabled={loading} type='submit'>{loading?"Loading":"Register"}</button>
       </form>
+      }
     </div>
   )
 }

@@ -26,6 +26,7 @@ const login = async({email, password}) =>{
 
        return response;
     } catch (error) {
+        console.log(error.response.data.message);
         throw new Error(error.response.data.message)
     }
 
