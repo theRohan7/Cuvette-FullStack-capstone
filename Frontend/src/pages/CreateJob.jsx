@@ -1,7 +1,9 @@
 import { useState } from "react"
-import { createJob } from "../services/job";
+import { createJob, getOneJob } from "../services/job";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const SKILLS = [
     {
@@ -48,7 +50,9 @@ const SKILLS = [
 ]
 
 function CreateJob() {
+   const { id } = useParams()
    const navigate = useNavigate()
+   const [loading, setLoading] = useState(false)
    const [fromData, setFormData] = useState({
       companyName:"",
       logoURL:"",
@@ -75,35 +79,55 @@ function CreateJob() {
          ...fromData,
          [e.target.name]: e.target.value
       })
-      console.log(fromData)
+      // console.log(fromData)
    }
    
    const handleSubmit = async(e)=>{
       e.preventDefault();
+      setLoading(true)
       const data = {...fromData}
       data.skills = data.skills.join(",")
       try {
-
-         const response = await createJob({data});
+         const jobId = id ? id : null;
+         const response = await createJob({data, id: jobId});
          console.log(response.data);
 
-         if(response.data.statusCode === 200)
-         toast.success(`${response.data.message}`)
+         if(response.data.statusCode === 200){
+            
+          jobId? toast.success("Job Updated Successfully") : toast.success(`${response.data.message}`)
+          setFormData(response.data.data)
+         }
          navigate("/")
 
 
          
       } catch (error) {
-         console.log(error.message);
+         console.log(error);
          toast.error("Failed to Create job.")
 
       }
+      setLoading(false)
    }
+
+   useEffect(() => {
+      const fetchJob = async() => {
+         const response = await getOneJob({id});
+         
+         if(response.status === 200){
+            setFormData(response.data.data)
+         }
+      }
+        if(id){
+          fetchJob()
+        }
+   },[])
 
   return (
     <div>
       <h1>Add Job Description</h1>
-      <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column", width:"40%", gap:"20px"}} >
+      {loading? <h2>Loading...</h2>:
+       <>
+         <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column", width:"40%", gap:"20px"}} >
         <input onChange={handleChange} value={fromData.companyName} name='companyName' type="text" placeholder='Company name'/>
         <input onChange={handleChange} value={fromData.logoURL} name='logoURL' type="text" placeholder='Logo URL' />
         <input onChange={handleChange} value={fromData.position} name='position' type="text" placeholder='Job Position'/>
@@ -121,16 +145,19 @@ function CreateJob() {
         <input onChange={handleChange} value={fromData.location} name='location' type="text" placeholder='Location' />
         <textarea onChange={handleChange} value={fromData.description} name="description" id="" placeholder='Job Description'></textarea>
         <textarea onChange={handleChange} value={fromData.about} name="about" id="" placeholder='About'></textarea>
-        <select onChange={handleChange} value={fromData.skills} name="skills" id="" multiple>
+        <select onChange={handleChange} name="skills" id="" multiple>
             {SKILLS.map((skill,idx) => 
                 
-                <option key={idx} value={skill.value} >{skill.label}</option>
+                <option selected={fromData.skills.includes(skill.value)} key={idx} value={skill.value} >{skill.label}</option>
             )}
         </select>
         <input onChange={handleChange} value={fromData.information} name="information" type="text" placeholder='Additional Information'/>
 
-        <button type="submit">Post</button>
+        {id? <button disabled={loading} type="submit">Update</button>:
+        <button disabled={loading} type="submit">Post</button>}
       </form>
+      </>}
+      
     </div>
   )
 }

@@ -2,12 +2,13 @@ import axios from "axios";
 import { BACKEND_URL } from "../utils/constants";
 
 
-const createJob = async ({data}) =>{
+const createJob = async ({data, id}) =>{
     
     try {
-        
+        const URL = id ? `${BACKEND_URL}/job/update/${id}` : `${BACKEND_URL}/job/create-job`
+        console.log(URL);
         const token = localStorage.getItem('token')
-        const response = await axios.post(`${BACKEND_URL}/job/create-job`, data, {
+        const response = await axios.post(URL, data, {
             headers:{
                 'Authorization': token
             }
@@ -16,7 +17,7 @@ const createJob = async ({data}) =>{
         return response
         
     } catch (error) {
-        console.log(error.response.data.me);
+        console.log(error.response.data.message);
         throw new Error(error.response.data.messgae)
     }
 
