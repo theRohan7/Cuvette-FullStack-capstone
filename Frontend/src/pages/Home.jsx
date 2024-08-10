@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
-import { getJobs } from "../services/job";
+import { deleteJob, getJobs } from "../services/job";
 import { useNavigate } from "react-router-dom";
 import { verifyToken } from "../utils/auth";
+import toast from 'react-hot-toast'
 
 function Home() {
   const navigate = useNavigate()
@@ -10,30 +11,47 @@ function Home() {
   const [authLoading, setAuthLoading] = useState(true)
   const [user, setUser] = useState(null)
   // console.log(jobs);
-  useEffect(() =>{
-    
-    const fetchJobs = async() => {
-      setLoading(true)
-      const response = await getJobs()
-      // console.log(response.data);
-      if(response.status === 200) {
-        setJobs(response.data.data)
-      }
-      setLoading(false)
-    }
-    
 
-    const fetchUser = async() => {  
+  const handleDeleteJob = async (id) => {
+    try {
+      const response = await deleteJob(id);
+
+      if (response.status === 200) {
+        toast.success(response.data.data);
+        fetchJobs();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Unauthorized Access to delete");
+    }
+  };
+
+  const fetchJobs = async () => {
+    setLoading(true);
+    const response = await getJobs();
+    // console.log(response.data);
+    if (response.status === 200) {
+      setJobs(response.data.data);
+    }
+    setLoading(false);
+  };
+  
+  useEffect(() => {
+
+    const fetchUser = async () => {
       const response = await verifyToken();
       // console.log(response);
-      if(response.status === 200){
-        setUser(response.data)
+      if (response.status === 200) {
+        setUser(response.data);
       }
-      setAuthLoading(false)
-    }
+      setAuthLoading(false);
+    };
+    
     fetchJobs();
     fetchUser();
-  },[])
+  }, []);
+
+
   return (
     <div>
       <h1>Home</h1>
@@ -54,6 +72,8 @@ function Home() {
               <button onClick={() => navigate(`/job/${job._id}`)} >View</button>
 
               {authLoading || user === null ? <button disabled>Edit</button> : <button onClick={()=> navigate(`/edit/${job._id}`)} >Edit</button>  }
+
+              {authLoading || user === null ? <button disabled>Delete</button> : <button onClick={() => handleDeleteJob(job._id)} >Delete</button>  }
             </div>
           )
         })}

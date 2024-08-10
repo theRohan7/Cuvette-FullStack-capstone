@@ -13,11 +13,13 @@ const createJob = async ({data, id}) =>{
                 'Authorization': token
             }
         })
+        // console.log(response);
+        
 
         return response
         
     } catch (error) {
-        console.log(error.response.data.message);
+        console.log(error);
         throw new Error(error.response.data.messgae)
     }
 
@@ -58,6 +60,26 @@ const createJob = async ({data, id}) =>{
    }
  }
 
+ const deleteJob = async (id) => {
+    try {
+        const URL = `${BACKEND_URL}/job/delete/${id}`
+        const token = localStorage.getItem("token");
+        const response = await axios.delete(URL, {
+            headers:{
+                'Authorization': token
+            }
+            
+        })
+        console.log(response);
+        return response;
+    } catch (error) {
+        // console.log(error.response);
+        
+        throw new Error(error.response.data.message)
+    }
+
+ }
 
 
-export { createJob, getJobs, getOneJob }
+
+export { createJob, getJobs, getOneJob, deleteJob }
