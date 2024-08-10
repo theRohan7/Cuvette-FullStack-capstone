@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-const SKILLS = [
+export const SKILLS = [
     {
        value: "React",
        label: "React" 
