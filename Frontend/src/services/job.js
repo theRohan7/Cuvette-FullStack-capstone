@@ -26,10 +26,12 @@ const createJob = async ({data, id}) =>{
 }
 
 
- const getJobs = async() =>{
+ const getJobs = async({skills}) =>{
     try {
+        const  skillsQuery = skills ? `skills=${skills.join(',')}` : null;
        const token  = localStorage.getItem("token"); 
-       const  response = await axios.get(`${BACKEND_URL}/job`,{
+       const URL = skillsQuery ? `${BACKEND_URL}/job?${skillsQuery}` : `${BACKEND_URL}/job`
+       const  response = await axios.get(URL,{
         headers:{
             'Authorization': token
         }
