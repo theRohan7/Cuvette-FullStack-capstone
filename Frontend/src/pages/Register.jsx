@@ -89,7 +89,7 @@ function Register() {
               </form>
               <p>
                 Already have an account?{" "}
-                <a href="http://localhost:3000/api/v1/login">Sign In</a>
+                <a href="http://localhost:5173/login">Sign In</a>
               </p>
             </div>
           </div>

@@ -123,43 +123,171 @@ function CreateJob() {
    },[])
 
   return (
-    <div>
-      <h1>Add Job Description</h1>
-      {loading? <h2>Loading...</h2>:
-       <>
-         <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column", width:"40%", gap:"20px"}} >
-        <input onChange={handleChange} value={fromData.companyName} name='companyName' type="text" placeholder='Company name'/>
-        <input onChange={handleChange} value={fromData.logoURL} name='logoURL' type="text" placeholder='Logo URL' />
-        <input onChange={handleChange} value={fromData.position} name='position' type="text" placeholder='Job Position'/>
-        <input onChange={handleChange} value={fromData.salary} name='salary' type="number" placeholder='Monthly Salary'/>
-        <select onChange={handleChange} value={fromData.jobType} name="jobType" id="">
-            <option value="Full-time">Full-time</option>
-            <option value="Part-time">Part-time</option>
-            <option value="Contract">Contract</option>
-            <option value="Freelance">Freelance</option>
-        </select>
-        <select onChange={handleChange} value={fromData.remote} name="remote" id="">
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-        </select>
-        <input onChange={handleChange} value={fromData.location} name='location' type="text" placeholder='Location' />
-        <textarea onChange={handleChange} value={fromData.description} name="description" id="" placeholder='Job Description'></textarea>
-        <textarea onChange={handleChange} value={fromData.about} name="about" id="" placeholder='About'></textarea>
-        <select onChange={handleChange} name="skills" id="" multiple>
-            {SKILLS.map((skill,idx) => 
+    <>
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <div className="body">
+          <div className="createJob-form-part">
+            <div className="createJob-heading">
+              <h2>Add job description</h2>
+            </div>
+            <div className="createJob-form">
+              <form
+                onSubmit={handleSubmit}  
+              >
+               <div className="createJob-form-group">
+                  <label htmlFor="companyName">Company Name</label>
+                  <input
+                     onChange={handleChange}
+                     value={fromData.companyName}
+                     name="companyName"
+                     type="text"
+                     placeholder="Company name"
+                  />
+               </div>
                 
-                <option selected={fromData.skills.includes(skill.value)} key={idx} value={skill.value} >{skill.label}</option>
-            )}
-        </select>
-        <input onChange={handleChange} value={fromData.information} name="information" type="text" placeholder='Additional Information'/>
+                <div className="createJob-form-group">
+                  <label htmlFor="logoURL">Add logo URL</label>
+                  <input
+                     onChange={handleChange}
+                     value={fromData.logoURL}
+                     name="logoURL"
+                     type="text"
+                     placeholder="Enter Link"
+                  />
+                </div>
+                
+                <div className="createJob-form-group">
+                  <label htmlFor="position">Job Position</label>
+                  <input
+                     onChange={handleChange}
+                     value={fromData.position}
+                     name="position"
+                     type="text"
+                     placeholder="Job Position"
+                  />
+                </div>
+                
+                <div className="createJob-form-group">
+                  <label htmlFor="salary">Monthly Salary</label>
+                  <input
+                     onChange={handleChange}
+                     value={fromData.salary}
+                     name="salary"
+                     type="number"
+                     placeholder="Monthly Salary"
+                  />
+                </div>
+                
+                <div className="createJob-form-group">
+                  <label htmlFor="jobType">Job Type</label>
+                  <select
+                     onChange={handleChange}
+                     value={fromData.jobType}
+                     name="jobType"
+                  >
+                     <option value="Full-time">Full-time</option>
+                     <option value="Part-time">Part-time</option>
+                     <option value="Contract">Contract</option>
+                     <option value="Freelance">Freelance</option>
+                  </select>
+                </div>
+                
+                <div className="createJob-form-group">
+                  <label htmlFor="remote">Remote/Office</label>
+                  <select
+                     onChange={handleChange}
+                     value={fromData.remote}
+                     name="remote"
+                  >
+                     <option value="true">Yes</option>
+                     <option value="false">No</option>
+                  </select>
+                </div>
+                
+                <div className="createJob-form-group">
+                  <label htmlFor="location">Location</label>
+                  <input
+                     onChange={handleChange}
+                     value={fromData.location}
+                     name="location"
+                     type="text"
+                     placeholder="Location"
+                  />
+                </div>
+               
+                <div className="createJob-form-group">
+                  <label htmlFor="description">Job Description</label>
+                  <textarea
+                     onChange={handleChange}
+                     value={fromData.description}
+                     name="description"
+                     placeholder="Job Description"
+                  ></textarea>
+                </div>
+                
+                <div className="createJob-form-group">
+                  <label htmlFor="about">About Company</label>
+                  <textarea
+                     onChange={handleChange}
+                     value={fromData.about}
+                     name="about"
+                     placeholder="About"
+                  ></textarea>
+                </div>
+                
+                <div className="createJob-form-group">
+                  <label htmlFor="skills">Skills Required</label>
+                  <select onChange={handleChange} name="skills" multiple>
+                     {SKILLS.map((skill, idx) => (
+                     <option
+                        selected={fromData.skills.includes(skill.value)}
+                        key={idx}
+                        value={skill.value}
+                     >
+                        {skill.label}
+                     </option>
+                     ))}
+                  </select>
+                </div>
+                
 
-        {id? <button disabled={loading} type="submit">Update</button>:
-        <button disabled={loading} type="submit">Post</button>}
-      </form>
-      </>}
-      
-    </div>
-  )
+                <div className="createJob-form-group">
+                  <label htmlFor="information">Information</label>
+                  <input
+                     onChange={handleChange}
+                     value={fromData.information}
+                     name="information"
+                     type="text"
+                     placeholder="Additional Information"
+                  />
+                </div>
+                
+
+                {id ? (
+                  <button disabled={loading} type="submit">
+                    Update
+                  </button>
+                ) : (
+                  <button disabled={loading} type="submit">
+                    + Add Job
+                  </button>
+                )}
+              </form>
+            </div>
+          </div>
+          <div className="createJob-image-container">
+            <div className="overlay">
+              <h2>Recruiter add job details here</h2>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
 
 export default CreateJob
+
+

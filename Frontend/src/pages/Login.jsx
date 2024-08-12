@@ -45,18 +45,55 @@ function Login() {
     }
   }
   return (
-    
-    <div>
-      <h1>Login</h1>
-      {loading ? <h1>Loading...</h1>: 
-        <form onSubmit={handleSubmit} >
-        <input type="email" name='email' value={userData.email} placeholder='Email' onChange={handleChange} />
-        <input type="password" name='password' value={userData.password} placeholder='Password' onChange={handleChange} />
-        <button disabled={loading} type='submit'>{loading? "Loading": "Login"}</button>
-      </form>      
-      }
-    </div>
-  )
+    <>
+      {loading ? (
+        <h1>Loading....</h1>
+      ) : (
+        <div className="body">
+          <div className="form-part">
+            <div className="heading">
+              <h2>Already have an account ?</h2>
+              <p>Your personal job finder is here</p>
+            </div>
+            <div className="register-form">
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="email"
+                  name="email"
+                  value={userData.email}
+                  placeholder="Email"
+                  onChange={handleChange}
+                />
+                <input
+                  type="password"
+                  name="password"
+                  value={userData.password}
+                  placeholder="Password"
+                  onChange={handleChange}
+                />
+                <button disabled={loading} type="submit">
+                  {loading ? "Loading" : "Sign in"}
+                </button>
+              </form>
+              <p>
+                Don't have an account?{" "}
+                <a href="http://localhost:5173/register">Sign Up</a>
+              </p>
+            </div>
+          </div>
+          <div className="image-container">
+            <div className="overlay">
+              <h2>Your Personal Job Finder</h2>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
 
 export default Login
+
+
+
+
