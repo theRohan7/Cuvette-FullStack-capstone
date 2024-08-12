@@ -5,3 +5,143 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* REGISTER CSS   */
+
+.body{
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); */
+  overflow: hidden;
+}
+
+.form-part{
+ width: 50%;
+ padding: 95px 95px 50px 50px;
+ background-color: #ffff;
+ font-family: 'DM Sans';
+ 
+}
+
+.form-part h2{
+  
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 57.61px;
+  text-align: start;
+  margin-bottom: 10px;
+
+}
+
+.form-part p{ 
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 30.24px;
+  text-align: start;
+  margin-bottom: 35px;
+  color: #525252;
+}
+
+.form-part form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-part input[type="text"],
+.form-part input[type="email"],
+.form-part input[type="password"] {
+    padding: 10px;
+    margin-bottom: 25px;
+    border: 2px solid #C2C2C2;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #525252;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.checkbox-container label {
+  font-size: 12px;
+  color: #666666;
+}
+
+.checkbox-container a {
+  color: #333;
+  text-decoration: none;
+}
+
+.checkbox-container a:hover {
+  text-decoration: underline;
+}
+
+.form-part button {
+  background-color: #FF5A5F;
+  width: 237px;
+  height: 45px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 25px;
+  font-weight: 600;
+  text-align: center;
+
+}
+
+.form-part button:hover {
+  background-color: #e14c4c;
+}
+
+.form-part p a {
+  color: #000000;
+  text-decoration: none;
+}
+
+.form-part p a:hover {
+  text-decoration: underline;
+}
+
+.image-container{
+  width: 55%;
+  background-size: cover;
+  background-image: url('https://s3-alpha-sig.figma.com/img/f916/e83d/5e2b67cb4a2bd105a7f8c3375419619a?Expires=1724630400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=IOVIcdBv3Emiyygbze9AcVz-AnIkIK6WXDNxJ5v7Er0ass9dYH88hx0PVBesB9gqREg0nQSc~66Y~A6WXxffGgd6uG5hmZDEC9suDvttQSnZfI8F4p3oRBmh7NcWcGwbvxqdSzq0gTQJmwv7J9vPDQX54SrdR-nvcgGmErV1JUS-65o8fGXGfpPW1W~rOiXbiA~Yz5URHZHilMW8mdaqvbjykhUeFc4xvnpBXIIaBgBjZPWlQxwMy4~86OGe8OnjpMYhP~30--rnVriWfRfsyEAHB~yngYH1171NX2SBeS-NRYvCMNEi0pPyq-WPCWDmbk6T-tj21IzA1jvR8RuUpQ__');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.overlay{
+  position: absolute;
+  top: 40px;
+  left: 70px;
+  color: white ;
+  font-size: 40px;
+}
+
+.overlay h2{
+  margin: 0;
+  font-family: 'DM Sans';
+  font-weight: 500;
+  line-height: 57.61px;
+  text-align: center;
+
+}
+
+/* LOGIN CSS  */
+

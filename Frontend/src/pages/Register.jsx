@@ -46,18 +46,62 @@ function Register() {
   }
 
   return (
-    <div>
-      <h1>Create an Account</h1>
-      {loading? <h1>Loading...</h1>: 
-        <form onSubmit={handleSubmit}>
-        <input name='name' value={userData.name} onChange={handleChange} type="text" placeholder="Name"/>
-        <input name='email' value={userData.email} onChange={handleChange} type="email" placeholder="Email"/>
-        <input name='password' value={userData.password} onChange={handleChange} type="password" placeholder="Password"/>
-        <button disabled={loading} type='submit'>{loading?"Loading":"Register"}</button>
-      </form>
-      }
-    </div>
-  )
+    <>
+      {loading ? (
+        <h1>Loading....</h1>
+      ) : (
+        <div className='body'>
+          <div className='form-part'>
+            <div className="heading">
+              <h2>Create an Account</h2>
+              <p>Your personal job finder is here</p>
+            </div>
+            <div className="register-form">
+              <form onSubmit={handleSubmit}>
+                <input
+                  name="name"
+                  value={userData.name}
+                  onChange={handleChange}
+                  type="text"
+                  placeholder="Name"
+                />
+                <input
+                  name="email"
+                  value={userData.email}
+                  onChange={handleChange}
+                  type="email"
+                  placeholder="Email"
+                />
+                <input
+                  name="password"
+                  value={userData.password}
+                  onChange={handleChange}
+                  type="password"
+                  placeholder="Password"
+                />
+                <div class="checkbox-container">
+                    <input type="checkbox" id="terms" required />
+                    <label for="terms">By creating an account, I agree to our <a href="#">terms of use</a> and <a href="#">privacy policy</a></label>
+                </div>
+                <button disabled={loading} type="submit">
+                  {loading ? "Loading" : "Create Account"}
+                </button>
+              </form>
+              <p>
+                Already have an account?{" "}
+                <a href="http://localhost:3000/api/v1/login">Sign In</a>
+              </p>
+            </div>
+          </div>
+          <div className="image-container">
+            <div className='overlay'>
+              <h2>Your Personal Job Finder</h2>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
 
 export default Register
